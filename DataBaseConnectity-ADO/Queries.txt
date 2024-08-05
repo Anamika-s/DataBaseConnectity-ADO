@@ -1,0 +1,7 @@
+﻿create database wiproDb
+use wiproDb
+
+create table Employee(id int, name varchar(20),
+dept varchar(20), salary int)
+
+select * From EMployee
