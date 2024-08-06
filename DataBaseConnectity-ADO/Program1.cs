@@ -4,7 +4,7 @@
 using System.Data.SqlClient;
 namespace DataBaseConnectity_ADO
 {
-    internal class Program
+    internal class Program1
     {
         static SqlConnection connection;
         static SqlCommand command;
@@ -28,7 +28,15 @@ namespace DataBaseConnectity_ADO
                             string dept = Console.ReadLine();
                             Console.WriteLine("enter salary");
                             int salary = int.Parse(Console.ReadLine());
-                            AddRecord(id, name, dept, salary); break;
+                            // Object Initializer
+                            Employee employee = new Employee()
+                            {
+                                Id = id,
+                                Name = name,
+                                Dept = dept,
+                                Salary = salary
+                            };
+                            AddRecord(employee); break;
                         }
                     case 3:
                         {
@@ -44,7 +52,14 @@ namespace DataBaseConnectity_ADO
                             string dept = Console.ReadLine();
                             Console.WriteLine("enter updated salary");
                             int salary = int.Parse(Console.ReadLine());
-                            EditRecord(id, dept, salary); break;
+                            Employee employee = new Employee()
+                            {
+                                Id = id,
+                                Dept = dept,
+                                Salary = salary
+                            };
+                            EditRecord(id, employee); break;
+
                         }
                     default:
                         Console.WriteLine("invalid choice"); break;
@@ -120,7 +135,7 @@ namespace DataBaseConnectity_ADO
             reader.Close();
             connection.Close();
         }
-        static void AddRecord(int id, string name, string dept, int salary)
+        static void AddRecord(Employee employee)
         {
             //string connectionString = "server=ANAMIKA\\SQLSERVER;database=wiproDb;" +
             //  "integrated security=true";
@@ -128,10 +143,10 @@ namespace DataBaseConnectity_ADO
             connection = GetConnection();
             command = new SqlCommand();
             command.CommandText = "insert into employee(id, name, dept, salary) values (@id, @name, @dept, @salary)";
-            command.Parameters.AddWithValue("@id", id);
-            command.Parameters.AddWithValue("@name", name);
-            command.Parameters.AddWithValue("@dept", dept);
-            command.Parameters.AddWithValue("@salary", salary);
+            command.Parameters.AddWithValue("@id", employee.Id);
+            command.Parameters.AddWithValue("@name", employee.Name);
+            command.Parameters.AddWithValue("@dept", employee.Dept);
+            command.Parameters.AddWithValue("@salary", employee.Salary);
             command.Connection = connection;
             connection.Open();
             command.ExecuteNonQuery(); // for insert update delete
@@ -156,7 +171,7 @@ namespace DataBaseConnectity_ADO
 
         }
 
-        static void EditRecord(int id, string dept, int salary)
+        static void EditRecord(int id, Employee employee)
         {
             //string connectionString = "server=ANAMIKA\\SQLSERVER;database=wiproDb;" +
             //  "integrated security=true";
@@ -165,8 +180,8 @@ namespace DataBaseConnectity_ADO
             command = new SqlCommand();
             command.CommandText = "update employee set salary=@salary, dept= @dept where id=@id";
             command.Parameters.AddWithValue("@id", id);
-            command.Parameters.AddWithValue("@dept", dept);
-            command.Parameters.AddWithValue("@salary", salary);
+            command.Parameters.AddWithValue("@dept", employee.Dept);
+            command.Parameters.AddWithValue("@salary", employee.Salary);
             command.Connection = connection;
             connection.Open();
             command.ExecuteNonQuery(); // for insert update delete

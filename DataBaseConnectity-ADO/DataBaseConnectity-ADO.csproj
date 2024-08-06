@@ -6,6 +6,7 @@
     <RootNamespace>DataBaseConnectity_ADO</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <StartupObject>DataBaseConnectity_ADO.Program1</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
